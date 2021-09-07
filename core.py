@@ -6,6 +6,7 @@ class CellularAutomation:
     
     CELL_SIZE = config.CELL_SIZE
     WIDTH = config.FIELD_WIDTH // CELL_SIZE
+    HEIGHT = config.FIELD_HEIGHT // CELL_SIZE
     cells: dict
     last_snapshot = {}
     generation = 0
@@ -13,9 +14,10 @@ class CellularAutomation:
     RULE = config.RULE  # source
 
     def __init__(self):
-        self.cells = {
-            j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
-        
+        print('create self.cells')
+        self.cells = {j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
+
+    
         if config.RANDOM_CELLS:
             self.clean_cells()
             self.make_RANDOM_CELLS()
@@ -23,6 +25,7 @@ class CellularAutomation:
 
     def make_RANDOM_CELLS(self):
         """Create new cells"""
+        print('make_RANDOM_CELLS')
         cells = int(len(self.cells) * config.NUMBER_OF_CELLS)
         for _ in range(cells): 
             random_id = random.randint(0, len(self.cells) - 1)
@@ -49,11 +52,12 @@ class CellularAutomation:
                         i = 0
 
                     if j < 0:
-                        j = self.WIDTH - 1
-                    elif j > self.WIDTH:
+                        j = self.HEIGHT - 1
+            
+                    elif j > self.HEIGHT:
                         j = 0
 
-                    curr_id = j + self.WIDTH * i
+                    curr_id = j + self.HEIGHT * i
                     try:
                         if self.cells[curr_id].status:
                             count += 1
@@ -76,8 +80,9 @@ class CellularAutomation:
 
 
     def clean_cells(self):
-        self.cells = {
-            j + self.WIDTH * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.WIDTH)}
+        self.cells = {j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
+        print('clean_cells')
+
 
 
     def calculate_cells(self):
