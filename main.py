@@ -1,3 +1,4 @@
+from front import Field
 import core
 import config
 import datetime
@@ -9,8 +10,12 @@ if config.FIELD_WIDTH > 1500:
     FRONT = False
 if FRONT:
     import front
-    # NAV_bar = front.NavigationBar()
-    FRONT_game = front.Field()
+
+    WINDOW = front.GameWindow()
+    FIELD = front.Field()
+    NAV_bar = front.NavigationBar()
+   
+    # GameWindow.blit_surface(self.surface, self.WIDTH, self.HEIGHT)
 
 
 PLAY = not FRONT
@@ -39,7 +44,8 @@ def check_endgame():
             cell_auto.clean_cells()
             cell_auto.make_RANDOM_CELLS()
         elif ENDGAME == 2:  # add new cells
-            FRONT_game.LIVE_COLOR = random.randint(50, 225), random.randint(50, 225), random.randint(50, 225)
+            print('2')
+            FIELD.COLOR_LIVE = random.randint(50, 225), random.randint(50, 225), random.randint(50, 225)
             cell_auto.make_RANDOM_CELLS()
         elif ENDGAME == 3:  # clean field
             cell_auto.clean_cells()
@@ -68,20 +74,26 @@ def main_cycle():
             write_log(f'{delta_time.seconds}.{delta_time.microseconds}')
 
         if FRONT:
-            FRONT_game.clock.tick(FRONT_game.FPS)
-            FRONT_game.display_update()
-            FRONT_game.surface.fill((FRONT_game.COLOR_DEAD))
+            WINDOW.clock.tick(WINDOW.FPS)
+            WINDOW.display_update()
+            FIELD.surface.fill((FIELD.COLOR_DEAD))
 
-            FRONT_game.draw_lines()
+            FIELD.draw_lines()
+            # print(len(cell_auto.cells))
+            FIELD.draw_cells(cell_auto.cells)
 
-            FRONT_game.draw_cells(cell_auto.cells)
+            result = FIELD.check_events()
 
-            result = FRONT_game.check_events()
 
-            # NAV_bar.draw_info(cell_auto.generation,
-            #             cell_auto.live_cells, cell_auto.cells)
+
+            WINDOW.blit_surface(NAV_bar.surface, FIELD.WIDTH, 0)
+    
+            WINDOW.blit_surface(FIELD.surface, 0, 0)
+            NAV_bar.draw_info(cell_auto.generation,
+                        cell_auto.live_cells, cell_auto.cells)
 
             if result[0] == 'PLAY_UPDATE':
+                print('play = not play')
                 PLAY = not PLAY
             elif result[0] == 'NEIGHBORS_UPDATE':
                 cell_auto.cells[result[1][1] + result[1][0] * cell_auto.WIDTH].status = True if not cell_auto.cells[result[1][1] +
