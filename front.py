@@ -5,9 +5,32 @@ import config
 
 FONT_SIZE = config.FONT_SIZE
 
-class Field:
+class GameWindow:
 
     FPS = config.FPS
+    WIDTH = config.FIELD_WIDTH + config.NAVBAR_WIDTH
+    HEIGHT = config.FIELD_HEIGHT
+
+    def __init__(self):
+        pygame.init()
+        self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
+        self.surface = pygame.display.set_mode(
+            (self.WIDTH, self.HEIGHT))
+        self.clock = pygame.time.Clock()
+
+    
+    def blit_surface(self, surface, x, y):
+
+        self.surface.blit(surface, (x, y))
+
+    
+    def display_update(self):
+        pygame.display.update()
+
+
+
+class Field:
+
     WIDTH = config.FIELD_WIDTH
     HEIGHT = config.FIELD_HEIGHT
     CELL_SIZE = config.CELL_SIZE
@@ -17,11 +40,10 @@ class Field:
     play = False
 
     def __init__(self):
-        pygame.init()
+        # pygame.init()
         self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
-        self.surface = pygame.display.set_mode(
-            (self.WIDTH, self.HEIGHT))
         self.clock = pygame.time.Clock()
+        self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
 
 
     def draw_cells(self, cells):
@@ -46,16 +68,16 @@ class Field:
                 self.surface, 
                 config.COLOR_LINE,
                 (0, x),
-                (self.WIDTH - config.NAVBAR_WIDTH, x))
+                (self.WIDTH, x))
 
             if x % (self.CELL_SIZE * 2)  == 0:  # 2 lines next to each other = bold line
                 pygame.draw.line(
                     self.surface, 
                     config.COLOR_LINE,
                     (0, x+1),
-                    (self.WIDTH - config.NAVBAR_WIDTH, x+1))
+                    (self.WIDTH, x+1))
 
-        for y in range(0, self.WIDTH - config.NAVBAR_WIDTH, self.CELL_SIZE):
+        for y in range(0, self.WIDTH, self.CELL_SIZE):
             pygame.draw.line(
                 self.surface, 
                 config.COLOR_LINE, 
@@ -68,6 +90,12 @@ class Field:
                     config.COLOR_LINE,
                     (y+1, 0),
                     (y+1, self.HEIGHT))
+
+
+    def blit_surface(self, surface, x, y):
+
+        self.surface.blit(surface, (x, y))
+
 
 
     def check_events(self):
@@ -86,12 +114,9 @@ class Field:
             elif event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 pos = (pos[0] // self.CELL_SIZE, pos[1] // self.CELL_SIZE)
+                print(pos)
                 return ['NEIGHBORS_UPDATE', pos]
         return ['']
-
-
-    def display_update(self):
-        pygame.display.update()
 
 
 
@@ -100,17 +125,18 @@ class NavigationBar:
     WIDTH = config.NAVBAR_WIDTH
     HEIGHT = config.FIELD_HEIGHT
     COLOR_INFO = config.COLOR_INFO
-    COLOR_BACKGROUND = config.COLOR_DEAD
+    COLOR_BACKGROUND = config.COLOR_NAVBAR
 
     def __init__(self):
-        pygame.init()
+        # pygame.init()
         self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
-        self.surface = Field.surface
         self.clock = pygame.time.Clock()
+        self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
+
 
     def draw_info(self, generation, live_cells, cells):
-        info_sc = pygame.Surface((300, self.WIDTH//2))
-        info_sc.fill(self.COLOR_BACKGROUND)
+        
+        self.surface.fill(self.COLOR_BACKGROUND)
         text_gen = self.font_pygame.render(
             "GENERATION: " + str(generation), 1, self.COLOR_INFO)
         text_count_cells = self.font_pygame.render(
@@ -118,8 +144,8 @@ class NavigationBar:
         text_count_cells1 = self.font_pygame.render(
             "DEAD CELLS: " + str(abs(len(cells)-live_cells)), 1, self.COLOR_INFO)
 
-        info_sc.blit(text_gen, (0, 0))
-        info_sc.blit(text_count_cells, (0, FONT_SIZE))
-        info_sc.blit(text_count_cells1, (0, FONT_SIZE*2))
+        self.surface.blit(text_gen, (0, 0))
+        self.surface.blit(text_count_cells, (0, FONT_SIZE))
+        self.surface.blit(text_count_cells1, (0, FONT_SIZE*2))
 
-        self.surface.blit(info_sc, (self.WIDTH, 0))
+      
