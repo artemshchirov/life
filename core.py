@@ -15,9 +15,25 @@ class CellularAutomation:
 
     def __init__(self):
         print('create self.cells')
-        self.cells = {j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
+        # self.cells = {
+        #     j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
 
-    
+        self.cells = {}
+        for i in range(self.WIDTH): 
+            # print("---")
+            for j in range(self.HEIGHT):
+                # print(i, j)
+                # print(j + self.HEIGHT * i)
+                self.cells[j + self.HEIGHT * i] = Cell(i, j)
+
+        # self.cells = {}
+
+        # for i in range(self.WIDTH):
+        #     for j in range(self.HEIGHT):
+        #         self.cells[(self.WIDTH * i, self.HEIGHT * j)] = Cell(i,j)
+        # print(self.cells)
+        print(f"\nlen(cells): {len(self.cells)}\n")
+
         if config.RANDOM_CELLS:
             self.clean_cells()
             self.make_RANDOM_CELLS()
@@ -29,6 +45,7 @@ class CellularAutomation:
         cells = int(len(self.cells) * config.NUMBER_OF_CELLS)
         for _ in range(cells): 
             random_id = random.randint(0, len(self.cells) - 1)
+ 
             self.cells[random_id].status = True
         self.update_neighbors()
 
@@ -80,8 +97,14 @@ class CellularAutomation:
 
 
     def clean_cells(self):
-        self.cells = {j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
-        print('clean_cells')
+        self.cells = {
+            j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
+        
+        # for i in range(self.WIDTH):
+        #     for j in range(self.HEIGHT):
+        #         self.cells[(self.WIDTH * i, self.HEIGHT * j)] = Cell(i,j)
+        
+        print('clean_cells, new len(cells):', len(self.cells))
 
 
 
