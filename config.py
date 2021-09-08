@@ -6,15 +6,15 @@ RANDOM_CELLS = True
 RULE = "3/2,3"
 RECORD = False
 ENDGAME = 2  # 1 start new game, 2 add new cells, 3 clean field
-NUMBER_OF_CELLS = 0.1 # 0 < num < 1 or random.uniform(0.1, 0.9)
+NUMBER_OF_CELLS = random.uniform(0.1, 0.9) # 0 < num < 1 or random.uniform(0.1, 0.9)
 
 
 # [FRONT]
 FRONT = True
-FPS = 120
+FPS = 0
 
-FIELD_WIDTH = 900
-FIELD_HEIGHT = 700
+FIELD_WIDTH = 2000
+FIELD_HEIGHT = 1200
 NAVBAR_WIDTH = 300
 
 CELL_SIZE = 10
