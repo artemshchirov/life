@@ -20,7 +20,6 @@ class GameWindow:
 
     
     def blit_surface(self, surface, x, y):
-
         self.surface.blit(surface, (x, y))
 
     
@@ -36,13 +35,12 @@ class Field:
     CELL_SIZE = config.CELL_SIZE
     COLOR_LIVE = config.COLOR_LIVE
     COLOR_DEAD = config.COLOR_DEAD
-
     play = False
 
     def __init__(self):
         # pygame.init()
         self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
-        self.clock = pygame.time.Clock()
+        # self.clock = pygame.time.Clock()
         self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
 
 
@@ -60,9 +58,6 @@ class Field:
                 
 
     def draw_lines(self):
-        """
-        """
-        
         for x in range(0, self.HEIGHT, self.CELL_SIZE):
             pygame.draw.line(
                 self.surface, 
@@ -93,9 +88,7 @@ class Field:
 
 
     def blit_surface(self, surface, x, y):
-
         self.surface.blit(surface, (x, y))
-
 
 
     def check_events(self):
@@ -107,15 +100,10 @@ class Field:
                 if event.key == K_SPACE:
                     return ['PLAY_UPDATE']
                 if event.key == K_e:
-                    if config.EMPTY_CELLS:
-                        return['FILL_CELLS']
-                    else:
-                        return ['EMPTY_CELLS']
+                    return['EMPTY_CELLS']
             elif event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                print("pygame.mouse.get_pos(): ", pos)
                 pos = (pos[0] // self.CELL_SIZE, pos[1] // self.CELL_SIZE)
-                print(f"x_pos[0]: {pos[0]} y_pos[1]: {pos[1]}")
                 return ['NEIGHBORS_UPDATE', pos]
         return ['']
 
@@ -131,7 +119,7 @@ class NavigationBar:
     def __init__(self):
         # pygame.init()
         self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
-        self.clock = pygame.time.Clock()
+        # self.clock = pygame.time.Clock()
         self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
 
 
@@ -145,8 +133,9 @@ class NavigationBar:
         text_count_cells1 = self.font_pygame.render(
             "DEAD CELLS: " + str(abs(len(cells)-live_cells)), 1, self.COLOR_INFO)
 
-        self.surface.blit(text_gen, (0, 0))
-        self.surface.blit(text_count_cells, (0, FONT_SIZE))
-        self.surface.blit(text_count_cells1, (0, FONT_SIZE*2))
+        left_space = int(config.NAVBAR_WIDTH * 0.05)
+        top_space = int(config.NAVBAR_WIDTH * 0.05)
 
-      
+        self.surface.blit(text_gen, (left_space, top_space))
+        self.surface.blit(text_count_cells, (left_space, top_space + FONT_SIZE))
+        self.surface.blit(text_count_cells1, (left_space, top_space + FONT_SIZE*2))
