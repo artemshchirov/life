@@ -7,7 +7,8 @@ import random
 
 FRONT = config.FRONT
 if config.FIELD_WIDTH > 1500:
-    FRONT = False
+    # FRONT = False
+    pass
 if FRONT:
     import front
 
@@ -80,7 +81,7 @@ def main_cycle():
 
             FIELD.draw_lines()
             # print(len(cell_auto.cells))
-            FIELD.draw_cells(cell_auto.cells)
+            FIELD.draw_cells(cell_auto.cells) 
 
             result = FIELD.check_events()
 
@@ -96,8 +97,12 @@ def main_cycle():
                 print('play = not play')
                 PLAY = not PLAY
             elif result[0] == 'NEIGHBORS_UPDATE':
-                cell_auto.cells[result[1][1] + result[1][0] * cell_auto.WIDTH].status = True if not cell_auto.cells[result[1][1] +
-                                                                                                                    result[1][0] * cell_auto.WIDTH].status else False
+                # print(f"cell_auto.cells[result[1][1] + result[1][0] * cell_auto.WIDTH].status: {cell_auto.cells[result[1][1] + result[1][0] * cell_auto.WIDTH].status}")
+                # print(f"result[1][1]y: {result[1][1]} + result[1][0]x: {result[1][0]} * cell_auto.WIDTH: {cell_auto.WIDTH}")
+                print("id:", result[1][1] + result[1][0] * cell_auto.HEIGHT)
+
+                cell_auto.cells[result[1][1] + result[1][0] * cell_auto.HEIGHT].status = True if not cell_auto.cells[result[1][1] +
+                                                                                                                    result[1][0] * cell_auto.HEIGHT].status else False
                 cell_auto.update_neighbors()
             elif result[0] == 'EMPTY_CELLS':
                 config.EMPTY_CELLS = True
