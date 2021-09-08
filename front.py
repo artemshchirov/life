@@ -113,8 +113,9 @@ class Field:
                         return ['EMPTY_CELLS']
             elif event.type == MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                print("pygame.mouse.get_pos(): ", pos)
                 pos = (pos[0] // self.CELL_SIZE, pos[1] // self.CELL_SIZE)
-                print(pos)
+                print(f"x_pos[0]: {pos[0]} y_pos[1]: {pos[1]}")
                 return ['NEIGHBORS_UPDATE', pos]
         return ['']
 
