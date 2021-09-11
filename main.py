@@ -9,7 +9,24 @@ if FRONT:
     import front
     WINDOW = front.GameWindow()
     FIELD = front.Field()
-    NAV_bar = front.NavigationBar()
+    NAVBAR = front.NavigationBar()
+
+    btn_options = front.Button(
+        "OPTIONS",
+        (config.NAVBAR_WIDTH * 0.1, 
+        config.NAVBAR_HEIGHT * 0.1),
+        font=20,
+        bg="black",
+        feedback="<- BACK")
+
+    btn_exit = front.Button(
+        "EXIT",
+        (100, 
+        200),
+
+        font=20,
+        bg="black",
+        feedback="ok")
 
 # PLAY = not FRONT
 PLAY = True
@@ -67,10 +84,22 @@ def main_cycle():
             FIELD.surface.fill((FIELD.COLOR_DEAD))
             FIELD.draw_lines()
             FIELD.draw_cells(cell_auto.cells) 
-            NAV_bar.draw_info(cell_auto.generation,
+            NAVBAR.draw_info(cell_auto.generation,
                         cell_auto.live_cells, cell_auto.cells)
+
+        
+            NAVBAR.blit_surface(btn_options.surface, 
+                config.NAVBAR_WIDTH // 2 - btn_options.x // 2, 
+                config.NAVBAR_HEIGHT - btn_options.y)
+
+            NAVBAR.blit_surface(btn_exit.surface, 
+                10, 20)
+
+
             WINDOW.blit_surface(FIELD.surface, 0, 0)
-            WINDOW.blit_surface(NAV_bar.surface, FIELD.WIDTH, 0)
+            WINDOW.blit_surface(NAVBAR.surface, FIELD.WIDTH, 0)
+
+        
             WINDOW.display_update()
 
             result = FIELD.check_events()
@@ -83,6 +112,15 @@ def main_cycle():
                 cell_auto.update_neighbors()
             elif result[0] == 'EMPTY_CELLS':
                 config.EMPTY_CELLS = not config.EMPTY_CELLS
+            elif result[0] == 'BUTTON':
+                print(result[1])
+                print(btn_options.rect.x, btn_options.rect.y)
+                if btn_options.rect.collidepoint(result[1]):
+                    print('PRESS')
+                    btn_options.change_text(btn_options.feedback, bg="red")
+
+
+            # button1.show()
 
 
 def main():

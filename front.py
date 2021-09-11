@@ -102,9 +102,20 @@ class Field:
                 if event.key == K_e:
                     return['EMPTY_CELLS']
             elif event.type == MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                pos = (pos[0] // self.CELL_SIZE, pos[1] // self.CELL_SIZE)
-                return ['NEIGHBORS_UPDATE', pos]
+                x, y = pygame.mouse.get_pos()
+
+
+                if pygame.mouse.get_pressed()[0]:
+                    print('Button')
+                    return['BUTTON', pygame.mouse.get_pos()]
+
+                if x in range(config.FIELD_WIDTH) and y in range(config.FIELD_HEIGHT):
+                    pos = (x // self.CELL_SIZE, y // self.CELL_SIZE)
+                    return ['NEIGHBORS_UPDATE', pos]
+
+
+            # button1.click(event)
+
         return ['']
 
 
@@ -139,3 +150,42 @@ class NavigationBar:
         self.surface.blit(text_gen, (left_space, top_space))
         self.surface.blit(text_count_cells, (left_space, top_space + FONT_SIZE))
         self.surface.blit(text_count_cells1, (left_space, top_space + FONT_SIZE*2))
+
+    def blit_surface(self, surface, x, y):
+        self.surface.blit(surface, (x, y))
+
+
+
+class Button():
+    """Create a button, then blit the surface in the while loop"""
+
+    def __init__(self, text: str, pos: tuple, font: int, bg="black", feedback=""):
+        self.x, self.y = pos
+        self.font = pygame.font.SysFont("Arial", font)
+        if feedback == "":
+            self.feedback = "text"
+        else:
+            self.feedback = feedback
+        self.change_text(text, bg)
+
+
+
+    def change_text(self, text, bg="black"):
+        """Change the text whe you click"""
+        self.text = self.font.render(text, 1, pygame.Color("White"))
+        # self.size = self.text.get_size() 
+        self.surface = pygame.Surface((config.BUTTON_WIDTH, config.BUTTON_HEIGHT))
+        self.surface.fill(bg)
+        self.surface.blit(self.text, (config.BUTTON_WIDTH // 2 - self.text.get_size()[0] // 2, config.BUTTON_HEIGHT // 2 - self.text.get_size()[1] // 2))
+        self.rect = pygame.Rect(config.FIELD_WIDTH + self.x, config.NAVBAR_HEIGHT - self.y, config.BUTTON_WIDTH, config.BUTTON_HEIGHT)
+
+    # def show(self):
+    #     self.surface.blit(self.surface, (self.x, self.y))
+
+    # def click(self, event):
+    #     x, y = pygame.mouse.get_pos()
+    #     if event.type == pygame.MOUSEBUTTONDOWN:
+    #         if pygame.mouse.get_pressed()[0]:
+    #             if self.rect.collidepoint(x, y):
+    #                 self.change_text(self.feedback, bg="red")
+
