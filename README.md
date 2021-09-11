@@ -28,4 +28,25 @@ With the Front disabled, the vending machine will start automatically.
 
 The program works without dependencies if FRONT is disabled. Otherwise, the `pygame` library is needed.
 
+## TODO
+
+- `START`
+- `PAUSE`
+- `STEP ->`
+- `<- STEP`
+- `RESET`
+- `CHANGE SPEED`
+- `SOUND`
+- `RANDOM COLORS`
+- `SCALE`
+- `ON/OFF GRID LINES`
+- `COLOR PATTERNS`
+- `NEW STATES`
+- `LINK README`
+- `PATTERNS LIB`
+- `CHOOSE&PASTE PATTERNS`
+- `PATTERNS ROTATING`
+- `VIEW`
+- `EXIT`
+
 ### Enjoy
