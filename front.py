@@ -104,9 +104,7 @@ class Field:
             elif event.type == MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
 
-
                 if pygame.mouse.get_pressed()[0]:
-                    print('Button')
                     return['BUTTON', pygame.mouse.get_pos()]
 
                 if x in range(config.FIELD_WIDTH) and y in range(config.FIELD_HEIGHT):
@@ -172,13 +170,15 @@ class Button():
 
     def change_text(self, text, bg="black"):
         """Change the text whe you click"""
+        print("PRESSED")
         self.text = self.font.render(text, 1, pygame.Color("White"))
         # self.size = self.text.get_size() 
         self.surface = pygame.Surface((config.BUTTON_WIDTH, config.BUTTON_HEIGHT))
         self.surface.fill(bg)
         self.surface.blit(self.text, (config.BUTTON_WIDTH // 2 - self.text.get_size()[0] // 2, config.BUTTON_HEIGHT // 2 - self.text.get_size()[1] // 2))
         self.rect = pygame.Rect(config.FIELD_WIDTH + self.x, config.NAVBAR_HEIGHT - self.y, config.BUTTON_WIDTH, config.BUTTON_HEIGHT)
-
+        # print(f"Rect {self.text} coords: {config.FIELD_WIDTH + self.x, config.NAVBAR_HEIGHT - self.y}")
+    
     # def show(self):
     #     self.surface.blit(self.surface, (self.x, self.y))
 
