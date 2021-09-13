@@ -104,7 +104,7 @@ def main_cycle():
 
             result = FIELD.check_events()
             if result[0] == 'PLAY_UPDATE':
-                print('play = not play')
+                print(f'button "space" was pressed, result: {result}')
                 PLAY = not PLAY
 
             elif result[0] == 'NEIGHBORS_UPDATE':
@@ -112,6 +112,7 @@ def main_cycle():
                                                                                                                     result[1][0] * cell_auto.HEIGHT].status else False
                 cell_auto.update_neighbors()
             elif result[0] == 'EMPTY_CELLS':
+                print(f'button "e" was pressed, result: {result}')
                 config.EMPTY_CELLS = not config.EMPTY_CELLS
             
             elif result[0] == 'BUTTON':
