@@ -13,7 +13,7 @@ if FRONT:
 
     btn_options = front.Button(
         "OPTIONS",
-        (config.NAVBAR_WIDTH * 0.1, 
+        (config.NAVBAR_WIDTH * 0.05, 
         config.NAVBAR_HEIGHT * 0.1),
         font=20,
         bg="black",
@@ -21,9 +21,8 @@ if FRONT:
 
     btn_exit = front.Button(
         "EXIT",
-        (100, 
-        200),
-
+        (config.NAVBAR_WIDTH * 0.55, 
+        config.NAVBAR_HEIGHT * 0.1),
         font=20,
         bg="black",
         feedback="ok")
@@ -89,11 +88,12 @@ def main_cycle():
 
         
             NAVBAR.blit_surface(btn_options.surface, 
-                config.NAVBAR_WIDTH // 2 - btn_options.x // 2, 
+                btn_options.x, 
                 config.NAVBAR_HEIGHT - btn_options.y)
 
             NAVBAR.blit_surface(btn_exit.surface, 
-                10, 20)
+                btn_exit.x, 
+                config.NAVBAR_HEIGHT - btn_exit.y)
 
 
             WINDOW.blit_surface(FIELD.surface, 0, 0)
@@ -106,21 +106,26 @@ def main_cycle():
             if result[0] == 'PLAY_UPDATE':
                 print('play = not play')
                 PLAY = not PLAY
+
             elif result[0] == 'NEIGHBORS_UPDATE':
                 cell_auto.cells[result[1][1] + result[1][0] * cell_auto.HEIGHT].status = True if not cell_auto.cells[result[1][1] +
                                                                                                                     result[1][0] * cell_auto.HEIGHT].status else False
                 cell_auto.update_neighbors()
             elif result[0] == 'EMPTY_CELLS':
                 config.EMPTY_CELLS = not config.EMPTY_CELLS
+            
             elif result[0] == 'BUTTON':
-                print(result[1])
-                print(btn_options.rect.x, btn_options.rect.y)
+                
+                print(f"btn_options here: {btn_options.rect.x, btn_options.rect.y}")
+                print(f"collidepoint check here: {result[1]}")    
+              
                 if btn_options.rect.collidepoint(result[1]):
-                    print('PRESS')
                     btn_options.change_text(btn_options.feedback, bg="red")
 
+                if btn_exit.rect.collidepoint(result[1]):
+                    btn_exit.change_text(btn_exit.feedback, bg="red")
 
-            # button1.show()
+
 
 
 def main():
