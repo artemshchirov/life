@@ -48,5 +48,6 @@ The program works without dependencies if FRONT is disabled. Otherwise, the `pyg
 - `PATTERNS ROTATING`
 - `VIEW`
 - `EXIT`
+- `ZOOM`
 
 ### Enjoy
