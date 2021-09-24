@@ -1,6 +1,7 @@
 # Cellular Automaton
 draft.py
 .gitattributes
+guides/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
