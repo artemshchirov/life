@@ -18,6 +18,7 @@ RECORD = False
 ENDGAME = 0  # 0 do nothing, 1 start new game, 2 add new cells, 3 clean field
 NUMBER_OF_CELLS = random.uniform(0.1, 0.6) # 0 < num < 1 or random.uniform(0.1, 0.9)
 
+
 # [FRONT]
 FRONT = True
 FPS = 10
@@ -28,16 +29,21 @@ EMPTY_CELLS = False  # True = empty borders, False = color filled
 # [WINDOW]
 WINDOW_WIDTH = get_screen_size()[0]
 WINDOW_HEIGHT = get_screen_size()[1]
-NAVBAR_WIDTH = int(WINDOW_WIDTH * 0.175)
-FIELD_WIDTH = int(WINDOW_WIDTH * 0.65)
-FIELD_HEIGHT = NAVBAR_HEIGHT = int(WINDOW_HEIGHT * 0.8)
+NAVBAR_WIDTH = int(WINDOW_WIDTH * 0.18)
+FIELD_WIDTH = int(WINDOW_WIDTH * 0.85 - NAVBAR_WIDTH)
+FIELD_HEIGHT = NAVBAR_HEIGHT = int(WINDOW_HEIGHT * .75)
 
 BUTTON_WIDTH = NAVBAR_WIDTH * 0.425
 BUTTON_HEIGHT = NAVBAR_HEIGHT * 0.09
 BUTTON_FONT_SIZE = int(BUTTON_WIDTH // 6)
 
+# CELL_RANDOM_STYLE = 1
 
 FONT_SIZE = NAVBAR_WIDTH // 10
+
+CELL_STYLE = "rectangle" # "random", "rectangle", "circle"
+CELL_ANIMATION = 0
+CELL_COLOR_RANDOM = False
 
 # [RGB]
 COLOR_LIVE = 61,182,61  # lime, cells 
