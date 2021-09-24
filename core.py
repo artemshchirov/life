@@ -18,13 +18,11 @@ class CellularAutomation:
             j + self.HEIGHT * i: Cell(i, j) for i in range(self.WIDTH) for j in range(self.HEIGHT)}
 
         if config.RANDOM_CELLS:
-            self.clean_cells()
             self.make_RANDOM_CELLS()
 
 
     def make_RANDOM_CELLS(self):
         """Create new cells"""
-        print('make_RANDOM_CELLS')
         cells = int(len(self.cells) * config.NUMBER_OF_CELLS)
         for _ in range(cells): 
             random_id = random.randint(0, len(self.cells) - 1)
@@ -34,8 +32,7 @@ class CellularAutomation:
 
     def update_neighbors(self):
         for curr_cell in self.cells.keys():
-            self.cells[curr_cell].neighbors_count = self.get_neighbors_count(self.cells[curr_cell].x,
-                                                                             self.cells[curr_cell].y)
+            self.cells[curr_cell].neighbors_count = self.get_neighbors_count(self.cells[curr_cell].x, self.cells[curr_cell].y)
 
 
     def get_neighbors_count(self, current_x: int, current_y: int) -> int:
@@ -47,6 +44,7 @@ class CellularAutomation:
                 else:
                     if i < 0:
                         i = self.WIDTH - 1
+
                     elif i > self.WIDTH:
                         i = 0
 
