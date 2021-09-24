@@ -155,6 +155,7 @@ class Field:
 
 
 
+
 class NavigationBar:
 
     WIDTH = config.NAVBAR_WIDTH

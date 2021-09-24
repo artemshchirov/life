@@ -92,7 +92,6 @@ def NAVBAR_surfaces_main():
     ]   
     return surfaces
 
-
 def NAVBAR_surfaces_options():
     """Return list with surfaces that displayed on sidebar when click on button OPTIONS"""
     surfaces = [
@@ -103,7 +102,6 @@ def NAVBAR_surfaces_options():
     ]
     return surfaces
 
-
 def get_screen_size():
     """Get info about user screen width, height"""
     pygame.init()
@@ -111,7 +109,6 @@ def get_screen_size():
     screen_width = screen_info.current_w
     screen_height = screen_info.current_h
     return screen_width, screen_height
-
 
 def set_style(default: int):
     result = default
