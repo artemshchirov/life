@@ -42,7 +42,7 @@ BUTTON_FONT_SIZE = int(BUTTON_WIDTH // 6)
 FONT_SIZE = NAVBAR_WIDTH // 10
 
 CELL_STYLE = "rectangle" # "random", "rectangle", "circle"
-CELL_ANIMATION = 0
+ANIMA_CELL_STYLE = False
 CELL_COLOR_RANDOM = False
 
 # [RGB]
