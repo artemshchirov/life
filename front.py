@@ -38,6 +38,8 @@ class GameWindow:
                     return['CHANGE_STYLE']
                 elif event.key == K_r:
                     return['CELL_RANDOM_COLOR']
+                elif event.key == K_a:
+                    return['CHANGE_STYLE_PER_FPS']
             if event.type == pygame.VIDEORESIZE:
                 return['FULLSCREEN', (event.w, event.h)]
 
@@ -72,7 +74,28 @@ class Field:
         self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
 
 
-    def draw_cells(self, cells):
+    def draw_rectangle(self, x, y, cell_color):
+        pygame.draw.rect(
+            self.surface, 
+            cell_color, 
+            (x * self.CELL_SIZE,
+             y * self.CELL_SIZE,
+            self.CELL_SIZE,
+            self.CELL_SIZE),
+            config.EMPTY_CELLS)   
+
+    def draw_circle(self, x, y, cell_color):
+        pygame.draw.circle(
+            self.surface, 
+            cell_color, 
+            (x * self.CELL_SIZE + self.CELL_SIZE // 2,
+             y * self.CELL_SIZE + self.CELL_SIZE // 2),
+            self.CELL_SIZE // 2.3,
+            config.EMPTY_CELLS)
+
+
+
+    def draw_cells(self, cells, default_style):
         """Draw cells on fielf while every FPS"""
 
         for i in range(len(cells)):
@@ -82,46 +105,24 @@ class Field:
                 else:
                     cell_color = config.COLOR_LIVE
 
-                if config.CELL_ANIMATION:
+                if config.ANIMA_CELL_STYLE:
                     config.CELL_STYLE = choice(["rectangle", "circle"])
+                else:
+                    config.CELL_STYLE = default_style
 
                 if config.CELL_STYLE == "random":
                     config.CELL_STYLE = cells[i].style
                     if config.CELL_STYLE == "rectangle":
-                        pygame.draw.rect(
-                            self.surface, 
-                            cell_color, 
-                            (cells[i].x * self.CELL_SIZE,
-                            cells[i].y * self.CELL_SIZE,
-                            self.CELL_SIZE,
-                            self.CELL_SIZE),
-                            config.EMPTY_CELLS)                        
+                        self.draw_rectangle(cells[i].x, cells[i].y, cell_color)
                     elif config.CELL_STYLE == "circle":
-                        pygame.draw.circle(
-                            self.surface, 
-                            cell_color, 
-                            (cells[i].x * self.CELL_SIZE + self.CELL_SIZE // 2,
-                            cells[i].y * self.CELL_SIZE + self.CELL_SIZE // 2),
-                            self.CELL_SIZE // 2.3,
-                            config.EMPTY_CELLS)
+                        self.draw_circle(cells[i].x, cells[i].y, cell_color) 
                     config.CELL_STYLE = "random"
+
                 elif config.CELL_STYLE == "rectangle":
-                    pygame.draw.rect(
-                        self.surface, 
-                        cell_color, 
-                        (cells[i].x * self.CELL_SIZE,
-                        cells[i].y * self.CELL_SIZE,
-                        self.CELL_SIZE,
-                        self.CELL_SIZE),
-                        config.EMPTY_CELLS)                        
+                    self.draw_rectangle(cells[i].x, cells[i].y, cell_color)    
                 elif config.CELL_STYLE == "circle":
-                    pygame.draw.circle(
-                        self.surface, 
-                        cell_color, 
-                        (cells[i].x * self.CELL_SIZE + self.CELL_SIZE // 2,
-                        cells[i].y * self.CELL_SIZE + self.CELL_SIZE // 2),
-                        self.CELL_SIZE // 2.3,
-                        config.EMPTY_CELLS)
+                    self.draw_circle(cells[i].x, cells[i].y, cell_color) 
+
                 elif config.CELL_STYLE == "triangle":
                     pass
 
@@ -204,8 +205,6 @@ class NavigationBar:
             x = surface_info[1]
             y = surface_info[2]
             self.surface.blit(surface, (x, y))
-
-
 
 
 
