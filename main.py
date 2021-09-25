@@ -110,26 +110,14 @@ def get_screen_size():
     screen_height = screen_info.current_h
     return screen_width, screen_height
 
-def set_style(default: int):
-    result = default
-
-    if config.CELL_STYLE == "random":
-        result = 0
-    elif config.CELL_STYLE == "rectangle":
-        result = 1
-    elif config.CELL_STYLE == "circle":
-        result = 2
-    
-    return result
 
 def main_cycle():
 
     PLAY = False
     options = False
 
-    cell_styles = {"random":0, "rectangle":1, "circle":2}
-    cell_style = set_style(cell_styles["rectangle"])
-
+    cell_styles = ["random", "rectangle", "circle",]
+    cell_style = cell_styles.index("rectangle")  # random, 0  rectangle, 1  circle, 2
 
     running = True
     while running:
@@ -152,7 +140,7 @@ def main_cycle():
 
             FIELD.surface.fill(config.COLOR_DEAD)
             FIELD.draw_lines()
-            FIELD.draw_cells(cell_auto.cells) 
+            FIELD.draw_cells(cell_auto.cells, cell_styles[cell_style]) 
             NAVBAR.draw_info(cell_auto.generation,
                         cell_auto.live_cells, cell_auto.cells)
             if options:
@@ -181,14 +169,17 @@ def main_cycle():
                     cell_style += 1
                     if cell_style > 2:
                         cell_style = 0
-                    config.CELL_STYLE = list(cell_styles.keys())[list(cell_styles.values()).index(cell_style)]
+                    config.CELL_STYLE = cell_styles[cell_style]
 
                 elif result[0] == 'CELL_RANDOM_COLOR':
                     config.CELL_COLOR_RANDOM = not config.CELL_COLOR_RANDOM
 
                 elif result[0] == 'EMPTY_CELLS':
                     config.EMPTY_CELLS = not config.EMPTY_CELLS
-                
+
+                elif result[0] == 'CHANGE_STYLE_PER_FPS':
+                    config.ANIMA_CELL_STYLE = not config.ANIMA_CELL_STYLE
+
                 elif result[0] == 'LMC' or result[0] == 'HOTKEY':
 
                     if btn_start.rect.collidepoint(result[1]) or 'SPACE' in result:
@@ -264,6 +255,7 @@ def main_cycle():
                         cell_auto.update_neighbors()
 
                     elif btn_help.rect.collidepoint(result[1]):
+                        print('HELP')
                         pass
 
                     elif btn_fullscreen.rect.collidepoint(result[1]):
