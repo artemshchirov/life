@@ -1,4 +1,8 @@
-# Cellular Automaton (in progress...)
+# Cellular Automaton
+
+![life example](./gifs/life.gif)
+
+## Description
 
 The program consists of two main modules: "Core" and "Front". The kernel is responsible for all calculations of each of the generations of the machine, based on the "rules" set by the user.
 
@@ -28,26 +32,33 @@ With the Front disabled, the vending machine will start automatically.
 
 The program works without dependencies if FRONT is disabled. Otherwise, the `pygame` library is needed.
 
+## HOTKEYS
+
+- `LMC` = ADD CELL
+- `SPACE` = START / PAUSE
+- `E` = EMPTY CELLS
+- `S` = CHANGE STYLE
+- `A` = CHANGE STYLE PER FPS
+- `R` = CELL RANDOM COLOR
+
 ## TODO
 
-- `START`
-- `PAUSE`
-- `STEP ->`
-- `<- STEP`
-- `RESET`
-- `CHANGE SPEED`
-- `SOUND`
-- `RANDOM COLORS`
-- `SCALE`
-- `ON/OFF GRID LINES`
-- `COLOR PATTERNS`
-- `NEW STATES`
-- `LINK README`
-- `PATTERNS LIB`
-- `CHOOSE&PASTE PATTERNS`
-- `PATTERNS ROTATING`
-- `VIEW`
-- `EXIT`
-- `ZOOM`
+- [x] START
+- [x] PAUSE
+- [x] STEP ->
+- [ ] <- STEP
+- [x] RESET
+- [x] CHANGE FPS
+- [ ] SOUND
+- [x] CHANGE COLORS
+- [x] SCALE
+- [ ] ON/OFF GRID LINES
+- [ ] CHOOSE & PASTE PATTERNS
+- [ ] PATTERNS ROTATING
+- [x] EXIT
+- [x] SCALE
+- [ ] SCREEN (MENU)
+- [ ] HELP
+- [ ] OPTIONS
 
 ### Enjoy
