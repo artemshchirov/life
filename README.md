@@ -60,5 +60,3 @@ The program works without dependencies if FRONT is disabled. Otherwise, the `pyg
 - [ ] SCREEN (MENU)
 - [ ] HELP
 - [ ] OPTIONS
-
-### Enjoy

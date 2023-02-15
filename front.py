@@ -6,6 +6,7 @@ from random import choice
 
 FONT_SIZE = config.FONT_SIZE
 
+
 class GameWindow:
 
     FPS = config.FPS
@@ -15,13 +16,12 @@ class GameWindow:
     def __init__(self):
         pygame.init()
         self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
-        self.surface = pygame.display.set_mode((self.WIDTH, self.HEIGHT), pygame.RESIZABLE)
+        self.surface = pygame.display.set_mode(
+            (self.WIDTH, self.HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
 
-    
     def display_update(self):
         pygame.display.update()
-
 
     def check_events(self):
         for event in pygame.event.get():
@@ -33,34 +33,34 @@ class GameWindow:
                 if event.key == K_SPACE:
                     return ['HOTKEY', (0, 0), 'SPACE']
                 elif event.key == K_e:
-                    return['EMPTY_CELLS']
+                    return ['EMPTY_CELLS']
                 elif event.key == K_s:
-                    return['CHANGE_STYLE']
+                    return ['CHANGE_STYLE']
                 elif event.key == K_r:
-                    return['CELL_RANDOM_COLOR']
+                    return ['CELL_RANDOM_COLOR']
                 elif event.key == K_a:
-                    return['CHANGE_STYLE_PER_FPS']
+                    return ['CHANGE_STYLE_PER_FPS']
             if event.type == pygame.VIDEORESIZE:
-                return['FULLSCREEN', (event.w, event.h)]
+                return ['FULLSCREEN', (event.w, event.h)]
 
             elif event.type == MOUSEBUTTONDOWN:
 
-                if event.button == 1:  
+                if event.button == 1:
                     if event.pos[0] in range(config.FIELD_WIDTH) and event.pos[1] in range(config.FIELD_HEIGHT):
-                        pos = (event.pos[0] // config.CELL_SIZE, event.pos[1] // config.CELL_SIZE)
+                        pos = (event.pos[0] // config.CELL_SIZE,
+                               event.pos[1] // config.CELL_SIZE)
                         return ['NEIGHBORS_UPDATE', pos]
-                    return['LMC', event.pos]  # Left Mouse Click
-                elif event.button == 2:  
-                    return['SWC', event.pos]  # Scroll Wheel Press
+                    return ['LMC', event.pos]  # Left Mouse Click
+                elif event.button == 2:
+                    return ['SWC', event.pos]  # Scroll Wheel Press
                 elif event.button == 3:
-                    return['RMC', event.pos]
+                    return ['RMC', event.pos]
                 elif event.button == 4:
-                    return['SWU', event.pos]
+                    return ['SWU', event.pos]
                 elif event.button == 5:
-                    return['LMC', event.pos]              
+                    return ['LMC', event.pos]
 
         return 0
-
 
 
 class Field:
@@ -73,27 +73,24 @@ class Field:
         self.font_pygame = pygame.font.SysFont('Arial', FONT_SIZE)
         self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
 
-
     def draw_rectangle(self, x, y, cell_color):
         pygame.draw.rect(
-            self.surface, 
-            cell_color, 
+            self.surface,
+            cell_color,
             (x * self.CELL_SIZE,
              y * self.CELL_SIZE,
-            self.CELL_SIZE,
-            self.CELL_SIZE),
-            config.EMPTY_CELLS)   
+             self.CELL_SIZE,
+             self.CELL_SIZE),
+            config.EMPTY_CELLS)
 
     def draw_circle(self, x, y, cell_color):
         pygame.draw.circle(
-            self.surface, 
-            cell_color, 
+            self.surface,
+            cell_color,
             (x * self.CELL_SIZE + self.CELL_SIZE // 2,
              y * self.CELL_SIZE + self.CELL_SIZE // 2),
             self.CELL_SIZE // 2.3,
             config.EMPTY_CELLS)
-
-
 
     def draw_cells(self, cells, default_style):
         """Draw cells on fielf while every FPS"""
@@ -115,46 +112,43 @@ class Field:
                     if config.CELL_STYLE == "rectangle":
                         self.draw_rectangle(cells[i].x, cells[i].y, cell_color)
                     elif config.CELL_STYLE == "circle":
-                        self.draw_circle(cells[i].x, cells[i].y, cell_color) 
+                        self.draw_circle(cells[i].x, cells[i].y, cell_color)
                     config.CELL_STYLE = "random"
 
                 elif config.CELL_STYLE == "rectangle":
-                    self.draw_rectangle(cells[i].x, cells[i].y, cell_color)    
+                    self.draw_rectangle(cells[i].x, cells[i].y, cell_color)
                 elif config.CELL_STYLE == "circle":
-                    self.draw_circle(cells[i].x, cells[i].y, cell_color) 
+                    self.draw_circle(cells[i].x, cells[i].y, cell_color)
 
                 elif config.CELL_STYLE == "triangle":
                     pass
 
-
     def draw_lines(self):
         for x in range(0, self.HEIGHT, self.CELL_SIZE):
             pygame.draw.line(
-                self.surface, 
+                self.surface,
                 config.COLOR_LINE,
                 (0, x),
                 (self.WIDTH, x))
-            if x % (self.CELL_SIZE * 2)  == 0:  # 2 lines next to each other = bold line
+            if x % (self.CELL_SIZE * 2) == 0:  # 2 lines next to each other = bold line
                 pygame.draw.line(
-                    self.surface, 
+                    self.surface,
                     config.COLOR_LINE,
                     (0, x+1),
                     (self.WIDTH, x+1))
-    
+
         for y in range(0, self.WIDTH, self.CELL_SIZE):
             pygame.draw.line(
-                self.surface, 
-                config.COLOR_LINE, 
+                self.surface,
+                config.COLOR_LINE,
                 (y, 0),
                 (y, self.HEIGHT))
-            if y % (self.CELL_SIZE * 2)  == 0:  
+            if y % (self.CELL_SIZE * 2) == 0:
                 pygame.draw.line(
-                    self.surface, 
+                    self.surface,
                     config.COLOR_LINE,
                     (y+1, 0),
                     (y+1, self.HEIGHT))
-
-
 
 
 class NavigationBar:
@@ -170,14 +164,13 @@ class NavigationBar:
         self.surface = pygame.Surface((self.WIDTH, self.HEIGHT))
         self.clock = pygame.time.Clock()
 
-
     def draw_info(self, generation, live_cells, cells):
-        
+
         self.surface.fill(self.COLOR_BACKGROUND)
         text_gen = self.font_info.render(
             f"GENERATION: {generation}", 1, self.COLOR_INFO)
         text_count_live = self.font_info.render(
-            f"ALIVE CELLS: {live_cells}", 1, (61,182,61))
+            f"ALIVE CELLS: {live_cells}", 1, (61, 182, 61))
         text_count_dead = self.font_info.render(
             f"DEAD CELLS: {abs(len(cells)-live_cells)}", 1, "red3")
         text_scale = self.font_param.render(
@@ -189,15 +182,16 @@ class NavigationBar:
         top_space = int(config.NAVBAR_HEIGHT * .349)
 
         self.surface.blit(text_scale, (left_space, top_space))
-        self.surface.blit(text_speed, (left_space+FONT_SIZE//2, config.NAVBAR_HEIGHT * .41))
+        self.surface.blit(text_speed, (left_space+FONT_SIZE //
+                          2, config.NAVBAR_HEIGHT * .41))
 
         left_space = int(config.NAVBAR_WIDTH * .05)
         top_space = int(config.NAVBAR_WIDTH * .05)
 
         self.surface.blit(text_gen, (left_space, top_space))
         self.surface.blit(text_count_live, (left_space, top_space + FONT_SIZE))
-        self.surface.blit(text_count_dead, (left_space, top_space + FONT_SIZE*2))
-
+        self.surface.blit(
+            text_count_dead, (left_space, top_space + FONT_SIZE*2))
 
     def blit_surfaces(self, surfaces):
         for surface_info in surfaces:
@@ -205,7 +199,6 @@ class NavigationBar:
             x = surface_info[1]
             y = surface_info[2]
             self.surface.blit(surface, (x, y))
-
 
 
 class Button():
@@ -223,12 +216,12 @@ class Button():
             self.feedback = feedback
         self.change_text(self.name, bg)
 
-
     def change_text(self, text, bg="black"):
         """Change the text when you click"""
         self.text = self.font.render(text, 1, pygame.Color("White"))
         self.surface = pygame.Surface((self.width, self.height))
         self.surface.fill(bg)
-        self.surface.blit(self.text, (self.width // 2 - self.text.get_size()[0] // 2, self.height // 2 - self.text.get_size()[1] // 2))
-        self.rect = pygame.Rect(config.FIELD_WIDTH + self.x, config.NAVBAR_HEIGHT - self.y, self.width, self.height)
-        
+        self.surface.blit(self.text, (self.width // 2 - self.text.get_size()
+                          [0] // 2, self.height // 2 - self.text.get_size()[1] // 2))
+        self.rect = pygame.Rect(config.FIELD_WIDTH + self.x,
+                                config.NAVBAR_HEIGHT - self.y, self.width, self.height)

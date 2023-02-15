@@ -1,6 +1,7 @@
 from random import randint, choice
 import config
 
+
 class Cell:
 
     x: int
@@ -17,6 +18,6 @@ class Cell:
         self.style = choice(["rectangle", "circle"])
 
     def dump(self):
-        result = {"x": self.x, "y": self.y, "status": self.status, "neighbors_count": self.neighbors_count}
+        result = {"x": self.x, "y": self.y, "status": self.status,
+                  "neighbors_count": self.neighbors_count}
         return result
-

@@ -1,5 +1,6 @@
 import random
 
+
 def get_screen_size():
     """Get info about user screen width, height"""
     import pygame
@@ -9,6 +10,7 @@ def get_screen_size():
     screen_height = screen_info.current_h
     return screen_width, screen_height
 
+
 w, h = get_screen_size()
 
 # [CORE]
@@ -16,7 +18,8 @@ RANDOM_CELLS = True
 RULE = "3/2,3"
 RECORD = False
 ENDGAME = 0  # 0 do nothing, 1 start new game, 2 add new cells, 3 clean field
-NUMBER_OF_CELLS = random.uniform(0.1, 0.6) # 0 < num < 1 or random.uniform(0.1, 0.9)
+# 0 < num < 1 or random.uniform(0.1, 0.9)
+NUMBER_OF_CELLS = random.uniform(0.1, 0.6)
 
 
 # [FRONT]
@@ -41,14 +44,13 @@ BUTTON_FONT_SIZE = int(BUTTON_WIDTH // 6)
 
 FONT_SIZE = NAVBAR_WIDTH // 10
 
-CELL_STYLE = "rectangle" # "random", "rectangle", "circle"
+CELL_STYLE = "rectangle"  # "random", "rectangle", "circle"
 ANIMA_CELL_STYLE = False
 CELL_COLOR_RANDOM = False
 
 # [RGB]
-COLOR_LIVE = 61,182,61  # lime, cells 
-COLOR_DEAD = 24,26,27  # black, background 
-COLOR_LINE = 39, 42, 44  # gray, lines on field 
+COLOR_LIVE = 61, 182, 61  # lime, cells
+COLOR_DEAD = 24, 26, 27  # black, background
+COLOR_LINE = 39, 42, 44  # gray, lines on field
 COLOR_INFO = 200, 200, 200  # white, top info
 COLOR_NAVBAR = 50, 50, 50
-
